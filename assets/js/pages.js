@@ -1,5 +1,4 @@
-/* ── Pages: Plans / Orders / Deposit / Giftcard / Notices ── */
-
+/* ── Plans Page ── */
 async function initPlans() {
   updateActiveNav('/plans');
   const content = $('#content');
@@ -112,18 +111,7 @@ async function initPlans() {
                 </div>
                 ${plan.content ? `<div class="plan-desc text-sm text-muted" style="margin:12px 0;padding:12px;background:var(--color-surface-2);border-radius:8px">${Utils.escapeHtml(plan.content)}</div>` : ''}
                 <button class="btn btn-full ${isPopular ? 'btn-primary' : 'btn-secondary'}" style="margin-top:auto"
-                  data-plan-id="${plan.id}"
-                  data-plan-name="${Utils.escapeHtml(plan.name)}"
-                  data-period="${period}"
-                  data-price="${price}"
-                  data-currency="${currency}"
-                  onclick="openOrderModal(
-                    parseInt(this.dataset.planId),
-                    this.dataset.planName,
-                    this.dataset.period,
-                    parseInt(this.dataset.price),
-                    this.dataset.currency
-                  )">
+                  onclick="openOrderModal(${plan.id}, '${Utils.escapeAttr(plan.name)}', '${period}', ${price}, '${Utils.escapeAttr(currency)}')">
                   立即购买
                 </button>
               </div>`;
@@ -235,7 +223,6 @@ window.openOrderModal = async (planId, planName, period, price, currency) => {
       <button class="btn btn-primary btn-full btn-lg" style="margin-top:var(--space-2)" onclick="submitOrder()">
         <span class="btn-text">确认支付</span>
       </button>`;
-    scanIconify();
   } catch (e) {
     console.error('[SLTE] openOrderModal failed:', e.message);
     Toast.error('加载支付方式失败，请重试');
@@ -305,7 +292,6 @@ let _payQRSession = 0;
 
 function showPayQR(data, tradeNo) {
   if (_payQRTimer) { clearInterval(_payQRTimer); _payQRTimer = null; }
-
   let modal = $('#modal-payqr');
   if (!modal) {
     modal = document.createElement('div');
@@ -330,16 +316,15 @@ function showPayQR(data, tradeNo) {
   }
 
   const qrBtn   = document.getElementById('qr-pay-btn');
+  qrBtn.onclick = () => checkPayStatus(tradeNo);
+  $('#qr-img').src = data.data;
+
   const closeBtn = modal.querySelector('.icon-btn');
   function _stopQRTimer() { clearInterval(_payQRTimer); _payQRTimer = null; }
-
-  qrBtn.onclick  = () => checkPayStatus(tradeNo);
-  modal.onclick  = e => { if (e.target === modal) _stopQRTimer(); };
+  modal.onclick = e => { if (e.target === modal) _stopQRTimer(); };
   if (closeBtn) closeBtn.onclick = () => { _stopQRTimer(); Modal.close('modal-payqr'); };
 
-  $('#qr-img').src = data.data;
   Modal.open('modal-payqr');
-
   let checks = 0;
   const mySession = ++_payQRSession;
   _payQRTimer = setInterval(async () => {
@@ -401,14 +386,14 @@ async function initOrders() {
       return;
     }
 
+    scanIconify();
     $('#orders-container').innerHTML = `
       <div class="card stagger">
         <div class="orders-list">
           ${orders.map(order => {
             const [statusText, statusType] = Utils.orderStatus(order.status);
             return `
-              <div class="order-item" data-trade-no="${Utils.escapeHtml(order.trade_no)}"
-                   onclick="openOrderDetail(this.dataset.tradeNo)" style="cursor:pointer">
+              <div class="order-item" onclick="openOrderDetail('${Utils.escapeAttr(order.trade_no)}')" style="cursor:pointer">
                 <div class="order-item-left">
                   <div class="order-plan-name">${Utils.escapeHtml(order.plan?.name || (order.period === 'deposit' ? '余额充值' : '套餐'))}</div>
                   <div class="order-meta">
@@ -423,12 +408,8 @@ async function initOrders() {
                   <span class="badge badge-${statusType}">${statusText}</span>
                   ${order.status === 0 ? `
                     <div class="flex gap-1" style="margin-top:6px" onclick="event.stopPropagation()">
-                      <button class="btn btn-primary btn-sm"
-                        data-trade-no="${Utils.escapeHtml(order.trade_no)}"
-                        onclick="continueOrder(this.dataset.tradeNo)">继续支付</button>
-                      <button class="btn btn-ghost btn-sm"
-                        data-trade-no="${Utils.escapeHtml(order.trade_no)}"
-                        onclick="cancelOrder(this.dataset.tradeNo)">取消</button>
+                      <button class="btn btn-primary btn-sm" onclick="continueOrder('${Utils.escapeAttr(order.trade_no)}')">继续支付</button>
+                      <button class="btn btn-ghost btn-sm" onclick="cancelOrder('${Utils.escapeAttr(order.trade_no)}')">取消</button>
                     </div>` : ''}
                   <span class="iconify" data-icon="heroicons:chevron-right" style="font-size:16px;color:var(--color-text-muted);margin-top:4px"></span>
                 </div>
@@ -493,6 +474,7 @@ window.openOrderDetail = async (tradeNo) => {
           <div class="order-detail-amount">${currency}${Utils.formatMoney(order.total_amount - (order.discount_amount||0))}</div>
           <div class="text-sm text-muted">${Utils.escapeHtml(order.plan?.name || '余额充值')} · ${Utils.periodLabel(order.period)}</div>
         </div>
+
         <div class="order-detail-rows">
           ${detailRows.map(r => `
             <div class="order-detail-row">
@@ -501,14 +483,11 @@ window.openOrderDetail = async (tradeNo) => {
             </div>
           `).join('')}
         </div>
+
         <div class="order-detail-actions">
           ${order.status === 0 ? `
-            <button class="btn btn-primary btn-full"
-              data-trade-no="${Utils.escapeHtml(order.trade_no)}"
-              onclick="continueOrder(this.dataset.tradeNo)">继续支付</button>
-            <button class="btn btn-ghost btn-full" style="margin-top:8px"
-              data-trade-no="${Utils.escapeHtml(order.trade_no)}"
-              onclick="cancelOrder(this.dataset.tradeNo)">取消订单</button>
+            <button class="btn btn-primary btn-full" onclick="continueOrder('${Utils.escapeAttr(order.trade_no)}')">继续支付</button>
+            <button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="cancelOrder('${Utils.escapeAttr(order.trade_no)}')">取消订单</button>
           ` : ''}
           ${order.status === 3 ? `
             <button class="btn btn-secondary btn-full" onclick="Router.navigate('/plans')">续费套餐</button>
@@ -550,27 +529,21 @@ window.continueOrder = async (tradeNo) => {
         <span class="payment-icon"><span class="iconify" data-icon="heroicons:credit-card" style="font-size:18px"></span></span>
         <span class="payment-name">${Utils.escapeHtml(m.name)}</span>
       </label>`).join('');
-
-    Modal.confirm('选择支付方式', '', async () => {
-      try {
-        const sel = document.querySelector('input[name="pay-method"]:checked');
-        const payId = sel ? sel.value : '0';
-        const res = await API.orderCheckout({ trade_no: tradeNo, method: payId === '0' ? undefined : parseInt(payId) }).catch(() => null);
-        if (!res) return;
-        if (res.data?.type === 'qrcode') {
-          Modal.close('modal-confirm');
-          showPayQR(res.data, tradeNo);
-        } else if (res.data?.type === 'redirect') {
-          window.location.href = res.data.data;
-        } else {
-          Toast.success('支付成功！');
-          initOrders();
-        }
-      } catch (e) {
-        Toast.error(e.message || '操作失败');
+    Modal.confirm('选择支付方式', '', async () => { try {
+      const sel = document.querySelector('input[name="pay-method"]:checked');
+      const payId = sel ? sel.value : '0';
+      const res = await API.orderCheckout({ trade_no: tradeNo, method: payId === '0' ? undefined : parseInt(payId) }).catch(() => null);
+      if (!res) return;
+      if (res.data?.type === 'qrcode') {
+        Modal.close('modal-confirm');
+        showPayQR(res.data, tradeNo);
+      } else if (res.data?.type === 'redirect') {
+        window.location.href = res.data.data;
+      } else {
+        Toast.success('支付成功！');
+        initOrders();
       }
-    }, {});
-
+    } catch (e) { Toast.error(e.message || '操作失败'); } }, {});
     const mc = document.getElementById('modal-confirm');
     if (mc) {
       mc.querySelector('#mc-msg').innerHTML = `<div class="payment-methods" style="margin-top:8px">${balanceOpt}${methodsHtml}</div>`;
@@ -633,8 +606,7 @@ async function initDeposit() {
           <span class="text-success">赠送金额</span>
           <span class="text-success font-medium" id="deposit-bonus-val">+${currency}0.00</span>
         </div>
-        <button class="btn btn-primary btn-full btn-lg" id="submit-deposit-btn"
-          style="margin-top:var(--space-2)" onclick="submitDeposit()">
+        <button class="btn btn-primary btn-full btn-lg" id="submit-deposit-btn" style="margin-top:var(--space-2)" onclick="submitDeposit()">
           <span class="btn-text">立即充值</span>
         </button>
       </div>
@@ -703,12 +675,12 @@ window.updateDepositPreview = () => {
   const fen    = Math.round(val * 100);
   window._depositAmount = fen;
   const currency = Utils.currency();
-  const totalEl = $('#deposit-total');
+  const totalEl  = $('#deposit-total');
   if (totalEl) totalEl.textContent = `${currency}${Utils.formatMoney(fen)}`;
 
-  const bonuses  = window._depositBonuses || [];
-  const bonus    = bonuses.filter(b => fen >= b.deposit).sort((a,b) => b.deposit - a.deposit)[0];
-  const hintEl   = $('#deposit-bonus-hint');
+  const bonuses      = window._depositBonuses || [];
+  const bonus        = bonuses.filter(b => fen >= b.deposit).sort((a,b) => b.deposit - a.deposit)[0];
+  const hintEl       = $('#deposit-bonus-hint');
   const bonusTotalEl = $('#deposit-bonus-total');
   const bonusValEl   = $('#deposit-bonus-val');
   if (bonus && hintEl) {
@@ -717,8 +689,8 @@ window.updateDepositPreview = () => {
     if (bonusValEl)   bonusValEl.textContent = `+${currency}${Utils.formatMoney(bonus.give)}`;
     scanIconify();
   } else {
-    if (hintEl)        hintEl.textContent = '';
-    if (bonusTotalEl)  bonusTotalEl.style.display = 'none';
+    if (hintEl)       hintEl.textContent = '';
+    if (bonusTotalEl) bonusTotalEl.style.display = 'none';
   }
 };
 
@@ -733,8 +705,8 @@ window.submitDeposit = async () => {
   if (!btn) return;
   btn.classList.add('btn-loading');
   try {
-    const saveRes = await API.orderSave({ plan_id: 0, period: 'deposit', deposit_amount: amount });
-    const tradeNo = saveRes.data;
+    const saveRes     = await API.orderSave({ plan_id: 0, period: 'deposit', deposit_amount: amount });
+    const tradeNo     = saveRes.data;
     const checkoutRes = await API.orderCheckout({ trade_no: tradeNo, method });
     if (checkoutRes.data?.type === 'qrcode') {
       showPayQR(checkoutRes.data, tradeNo);
@@ -748,6 +720,11 @@ window.submitDeposit = async () => {
   } finally {
     btn.classList.remove('btn-loading');
   }
+};
+
+window.selectPaymentMethod = (radio) => {
+  $$('.payment-method').forEach(el => el.classList.remove('selected'));
+  radio.closest('.payment-method')?.classList.add('selected');
 };
 
 /* ── Giftcard Page ── */
@@ -840,7 +817,7 @@ async function initNotices() {
       <div class="skeleton" style="height:200px;border-radius:16px"></div>
     </div>`;
   try {
-    const res = await API.noticeList();
+    const res     = await API.noticeList();
     const notices = res.data || [];
     if (!notices.length) {
       $('#notices-container').innerHTML = emptyState('lottie-notices', '暂无公告', '目前没有系统公告');

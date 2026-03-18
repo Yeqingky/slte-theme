@@ -6,10 +6,10 @@
 
 :root {
   /* ── Brand Colors ── */
-  --color-primary:        #4A7C6F;
+  --color-primary:        #4A7C6F;   /* sage green */
   --color-primary-light:  #6B9E91;
   --color-primary-dark:   #345A50;
-  --color-primary-bg:     #EBF4F1;
+  --color-primary-bg:     #EBF4F1;   /* very light sage */
   --color-primary-muted:  #C8DDD9;
 
   /* ── Accent ── */
@@ -27,9 +27,9 @@
   --color-info-bg:        #EBF3FA;
 
   /* ── Neutral Palette ── */
-  --color-bg:             #F5F6F8;
-  --color-surface:        #FFFFFF;
-  --color-surface-2:      #F9FAFB;
+  --color-bg:             #F5F6F8;   /* page background */
+  --color-surface:        #FFFFFF;   /* card surface */
+  --color-surface-2:      #F9FAFB;   /* subtle surface */
   --color-border:         #E8EAED;
   --color-border-light:   #F0F2F4;
   --color-divider:        #ECEEF1;
@@ -143,6 +143,12 @@
    通过 body[data-dark="1"] 切换，各主题均适配
    ============================================================ */
 
+/*
+  夜色模式切换过渡动画：
+  - 仅在 body[data-dark-ready] 存在时生效（由 JS 在首次切换前写入），
+    首次页面加载时不触发，避免防闪烁脚本失效。
+  - 过渡范围精确到颜色相关属性，不影响 transform/opacity 等动画性能。
+*/
 body[data-dark-ready] {
   transition:
     background-color 0.25s ease,
@@ -163,19 +169,22 @@ body[data-dark-ready] *::after {
 }
 
 body[data-dark="1"] {
-  --color-bg:             #0F1117;
-  --color-surface:        #1A1D27;
-  --color-surface-2:      #22263A;
+  /* 中性色板：深色背景体系 */
+  --color-bg:             #0F1117;   /* 页面背景 */
+  --color-surface:        #1A1D27;   /* 卡片背景 */
+  --color-surface-2:      #22263A;   /* 次级表面 */
   --color-border:         #2E3347;
   --color-border-light:   #252940;
   --color-divider:        #2A2E42;
 
+  /* 文字色板 */
   --color-text-primary:   #E8ECF4;
   --color-text-secondary: #9BA8C0;
   --color-text-muted:     #616D88;
   --color-text-disabled:  #404660;
   --color-text-inverse:   #0F1117;
 
+  /* 语义色：适当调亮以在深色背景下清晰可见 */
   --color-success:        #5DBF8A;
   --color-success-bg:     #0D2A1C;
   --color-warning:        #E8A87A;
@@ -185,6 +194,7 @@ body[data-dark="1"] {
   --color-info:           #6BA8D8;
   --color-info-bg:        #0A1E30;
 
+  /* 阴影在深色模式下更深 */
   --shadow-xs:   0 1px 3px rgba(0,0,0,.25);
   --shadow-sm:   0 2px 8px rgba(0,0,0,.30);
   --shadow-md:   0 4px 16px rgba(0,0,0,.40);
@@ -192,6 +202,7 @@ body[data-dark="1"] {
   --shadow-card: 0 2px 12px rgba(0,0,0,.30);
 }
 
+/* 夜色模式 × 默认主题（sage green） */
 body[data-dark="1"]:not([data-theme]),
 body[data-dark="1"][data-theme="default"] {
   --color-primary:        #5A9E91;
@@ -202,6 +213,7 @@ body[data-dark="1"][data-theme="default"] {
   --color-accent:         #7ABFB2;
 }
 
+/* 夜色模式 × blue */
 body[data-dark="1"][data-theme="blue"] {
   --color-primary:        #6A8FC5;
   --color-primary-light:  #8AAFDF;
@@ -211,6 +223,7 @@ body[data-dark="1"][data-theme="blue"] {
   --color-accent:         #8AAFDF;
 }
 
+/* 夜色模式 × black */
 body[data-dark="1"][data-theme="black"] {
   --color-primary:        #7A8A98;
   --color-primary-light:  #9AAAB8;
@@ -220,6 +233,7 @@ body[data-dark="1"][data-theme="black"] {
   --color-accent:         #9AAAB8;
 }
 
+/* 夜色模式 × darkblue */
 body[data-dark="1"][data-theme="darkblue"] {
   --color-primary:        #5A7AAA;
   --color-primary-light:  #7A9ACA;
@@ -229,6 +243,7 @@ body[data-dark="1"][data-theme="darkblue"] {
   --color-accent:         #7A9ACA;
 }
 
+/* 夜色模式下各组件的额外覆盖 */
 body[data-dark="1"] .card {
   background: var(--color-surface);
   border-color: var(--color-border-light);
@@ -315,6 +330,7 @@ body[data-dark="1"] .sub-action-item:hover {
   background: var(--color-surface-2);
 }
 
+/* 夜色模式切换按钮 — 与铃铛 icon-btn 完全统一，无背景无边框 */
 .dark-toggle {
   display: inline-flex;
   align-items: center;
@@ -330,6 +346,7 @@ body[data-dark="1"] .sub-action-item:hover {
   cursor: pointer;
   flex-shrink: 0;
 }
+/* dark-toggle-icon span 容器：消除 block 行高间距 */
 #dark-toggle-icon {
   display: flex;
   align-items: center;
@@ -363,11 +380,13 @@ body[data-dark="1"] .dark-toggle:hover {
   padding: 0;
 }
 
+/* 禁用浏览器默认点击高亮（移动端浅蓝色框） */
 * {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
 
+/* 按钮、链接、交互元素：移除默认 outline，但保留键盘访问的自定义 focus 样式 */
 button, a, [role="button"], label, select {
   outline: none;
 }
@@ -376,12 +395,15 @@ button:focus-visible, a:focus-visible, [role="button"]:focus-visible, select:foc
   outline-offset: 2px;
 }
 
+/* 输入框保留自定义焦点样式（不用浏览器默认蓝色） */
 input, textarea {
   outline: none;
 }
 input:focus, textarea:focus {
+  /* 焦点样式由 .form-input:focus 控制 */
 }
 
+/* 保留文字选择功能（仅对交互元素禁用，文字内容不影响） */
 button, [role="button"] {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -668,6 +690,7 @@ ul, ol { list-style: none; }
   color: var(--color-danger);
 }
 
+/* Toggle Switch */
 .toggle {
   position: relative;
   display: inline-flex;
@@ -915,6 +938,7 @@ ul, ol { list-style: none; }
 }
 .copy-btn:hover { background: var(--color-primary-bg); }
 
+/* Stat Card */
 .stat-card {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -947,6 +971,7 @@ ul, ol { list-style: none; }
   margin-top: 2px;
 }
 
+/* Empty State */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -971,6 +996,7 @@ ul, ol { list-style: none; }
   color: var(--color-text-muted);
 }
 
+/* Ripple effect */
 .ripple {
   position: relative;
   overflow: hidden;
@@ -987,6 +1013,7 @@ ul, ol { list-style: none; }
   to { transform: scale(4); opacity: 0; }
 }
 
+/* Animations */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -1005,6 +1032,7 @@ ul, ol { list-style: none; }
 .animate-slide-up   { animation: slide-up   var(--duration-base) var(--ease-out) both; }
 .animate-slide-down { animation: slide-down var(--duration-base) var(--ease-out) both; }
 
+/* Stagger children */
 .stagger > * { animation: slide-up var(--duration-base) var(--ease-out) both; }
 .stagger > *:nth-child(1) { animation-delay: 0ms; }
 .stagger > *:nth-child(2) { animation-delay: 60ms; }

@@ -1,5 +1,3 @@
-/* ── Pages: Invite / Tickets / Knowledge / Profile ── */
-
 /* ── Invite Page ── */
 async function initInvite() {
   updateActiveNav('/invite');
@@ -12,12 +10,12 @@ async function initInvite() {
     <div id="invite-container"><div class="skeleton" style="height:300px;border-radius:16px"></div></div>`;
 
   try {
-    const res = await API.inviteInfo();
-    const data = res.data;
+    const res      = await API.inviteInfo();
+    const data     = res.data;
     const currency = Utils.currency();
-    const codes = data.codes || [];
-    const stat = data.stat || {};
-    const siteUrl = window.routerBase || location.origin;
+    const codes    = data.codes || [];
+    const stat     = data.stat  || {};
+    const siteUrl  = window.routerBase || location.origin;
 
     content.innerHTML = `
       <div class="page-header animate-slide-down">
@@ -68,16 +66,12 @@ async function initInvite() {
               return `
                 <div class="invite-code-item">
                   <div class="invite-code-info">
-                    <code class="invite-code-text">${code.code}</code>
+                    <code class="invite-code-text">${Utils.escapeHtml(code.code)}</code>
                     <span class="text-xs text-muted">已使用 ${code.pv || 0} 次</span>
                   </div>
                   <div class="flex gap-1">
-                    <button class="btn btn-ghost btn-sm"
-                      data-code="${Utils.escapeAttr(code.code)}"
-                      onclick="Utils.copy(this.dataset.code)">复制码</button>
-                    <button class="btn btn-secondary btn-sm"
-                      data-url="${Utils.escapeAttr(inviteUrl)}"
-                      onclick="Utils.copy(this.dataset.url)">复制链接</button>
+                    <button class="btn btn-ghost btn-sm" data-code="${Utils.escapeAttr(code.code)}" onclick="Utils.copy(this.dataset.code)">复制码</button>
+                    <button class="btn btn-secondary btn-sm" data-url="${Utils.escapeAttr(inviteUrl)}" onclick="Utils.copy(this.dataset.url)">复制链接</button>
                   </div>
                 </div>`;
             }).join('') : emptyState('lottie-invite-codes', '暂无邀请码', '点击生成邀请码开始推广', '生成邀请码', 'genInviteCode()')}
@@ -102,7 +96,9 @@ async function initInvite() {
       </div>
 
       <div class="card stagger" style="margin-top:var(--space-2)">
-        <div class="card-header"><div class="card-title">佣金明细</div></div>
+        <div class="card-header">
+          <div class="card-title">佣金明细</div>
+        </div>
         <div id="commission-details">
           <div class="skeleton" style="height:120px;border-radius:8px"></div>
         </div>
@@ -117,10 +113,10 @@ async function initInvite() {
 
 async function loadCommissionDetails() {
   try {
-    const res = await API.inviteDetails({ current: 1, page_size: 20 });
-    const items = res.data || [];
+    const res      = await API.inviteDetails({ current: 1, page_size: 20 });
+    const items    = res.data || [];
     const currency = Utils.currency();
-    const el = $('#commission-details');
+    const el       = $('#commission-details');
     if (!el) return;
     if (!items.length) {
       el.innerHTML = emptyState('lottie-commission', '暂无佣金记录', '邀请好友购买套餐后将产生佣金');
@@ -180,10 +176,7 @@ window.openWithdrawModal = () => {
     modal.className = 'modal-overlay hidden';
     modal.innerHTML = `
       <div class="modal">
-        <div class="modal-header">
-          <span class="modal-title">申请提现</span>
-          <button class="icon-btn" onclick="Modal.close('modal-withdraw')">${ICONS.close}</button>
-        </div>
+        <div class="modal-header"><span class="modal-title">申请提现</span><button class="icon-btn" onclick="Modal.close('modal-withdraw')">${ICONS.close}</button></div>
         <div class="modal-body">
           <div class="form-group" style="margin-bottom:var(--space-2)">
             <label class="form-label">提现方式</label>
@@ -211,7 +204,7 @@ window.openWithdrawModal = () => {
 };
 
 window.submitWithdraw = async () => {
-  const method = $('#withdraw-method').value;
+  const method  = $('#withdraw-method').value;
   const account = $('#withdraw-account').value.trim();
   if (!account) return Toast.warning('请输入提现账户');
   try {
@@ -241,7 +234,7 @@ async function initTickets() {
     <div id="tickets-container"><div class="skeleton" style="height:200px;border-radius:16px"></div></div>`;
 
   try {
-    const res = await API.ticketList();
+    const res     = await API.ticketList();
     const tickets = res.data || [];
     if (!tickets.length) {
       $('#tickets-container').innerHTML = emptyState('lottie-tickets', '暂无工单', '有问题可以提交工单联系我们', '新建工单', 'openNewTicketModal()');
@@ -254,7 +247,7 @@ async function initTickets() {
         <div class="tickets-list">
           ${tickets.map(t => {
             const [statusText, statusType] = Utils.ticketStatus(t.status);
-            const [levelText, levelType] = Utils.ticketLevel(t.level);
+            const [levelText, levelType]   = Utils.ticketLevel(t.level);
             return `
               <div class="ticket-item" onclick="openTicketDetail(${t.id})">
                 <div class="ticket-item-left">
@@ -285,10 +278,7 @@ window.openNewTicketModal = () => {
     modal.className = 'modal-overlay hidden';
     modal.innerHTML = `
       <div class="modal">
-        <div class="modal-header">
-          <span class="modal-title">新建工单</span>
-          <button class="icon-btn" onclick="Modal.close('modal-new-ticket')">${ICONS.close}</button>
-        </div>
+        <div class="modal-header"><span class="modal-title">新建工单</span><button class="icon-btn" onclick="Modal.close('modal-new-ticket')">${ICONS.close}</button></div>
         <div class="modal-body">
           <div class="form-group" style="margin-bottom:var(--space-2)">
             <label class="form-label">主题</label>
@@ -304,8 +294,7 @@ window.openNewTicketModal = () => {
           </div>
           <div class="form-group">
             <label class="form-label">详细描述</label>
-            <textarea class="form-input" id="ticket-message" rows="5"
-              placeholder="请详细描述您遇到的问题..." style="resize:vertical"></textarea>
+            <textarea class="form-input" id="ticket-message" rows="5" placeholder="请详细描述您遇到的问题..." style="resize:vertical"></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -356,8 +345,8 @@ window.openTicketDetail = async (id) => {
   $('#ticket-detail-body').innerHTML = `<div class="skeleton" style="height:200px;border-radius:8px"></div>`;
 
   try {
-    const res = await API.ticketList({ id });
-    const ticket = res.data;
+    const res      = await API.ticketList({ id });
+    const ticket   = res.data;
     const messages = ticket.message || [];
     $('#ticket-detail-title').textContent = ticket.subject;
 
@@ -409,8 +398,7 @@ window.closeTicket = (id) => {
   });
 };
 
-let _knowledgeReqId = 0;
-
+/* ── Knowledge Page ── */
 async function initKnowledge() {
   updateActiveNav('/knowledge');
   const content = $('#content');
@@ -420,26 +408,23 @@ async function initKnowledge() {
       <p class="page-subtitle">查看使用指南和常见问题</p>
     </div>
     <div class="form-input-group" style="margin-bottom:var(--space-2);max-width:400px">
-      <span class="input-prefix">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </span>
-      <input class="form-input has-prefix" id="knowledge-search"
-        placeholder="搜索文章..." oninput="searchKnowledge(this.value)">
+      <span class="input-prefix"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input class="form-input has-prefix" id="knowledge-search" placeholder="搜索文章..." oninput="searchKnowledge(this.value)">
     </div>
     <div id="knowledge-container"><div class="skeleton" style="height:200px;border-radius:16px"></div></div>`;
 
   await loadKnowledge();
 }
 
+let _knowledgeReqId = 0;
+
 async function loadKnowledge(keyword = '') {
   const reqId = ++_knowledgeReqId;
   try {
-    const res = await API.knowledgeList({ language: 'zh-CN', keyword });
+    const res    = await API.knowledgeList({ language: 'zh-CN', keyword });
     if (reqId !== _knowledgeReqId) return;
     const groups = res.data || {};
-    const el = $('#knowledge-container');
+    const el     = $('#knowledge-container');
     if (!el) return;
 
     const allItems = Object.values(groups).flat();
@@ -453,18 +438,11 @@ async function loadKnowledge(keyword = '') {
       <div class="stagger">
         ${Object.entries(groups).map(([cat, items]) => `
           <div class="card" style="margin-bottom:var(--space-1)">
-            <div class="card-header">
-              <div class="card-title">
-                <span class="iconify" data-icon="heroicons:folder"
-                  style="font-size:18px;vertical-align:-3px;margin-right:6px;color:var(--color-primary)"></span>
-                ${Utils.escapeHtml(cat || '未分类')}
-              </div>
-            </div>
+            <div class="card-header"><div class="card-title"><span class="iconify" data-icon="heroicons:folder" style="font-size:18px;vertical-align:-3px;margin-right:6px;color:var(--color-primary)"></span>${Utils.escapeHtml(cat || '未分类')}</div></div>
             <div class="knowledge-list">
               ${items.map(item => `
                 <div class="knowledge-item" onclick="openKnowledgeArticle(${item.id})">
-                  <span class="iconify" data-icon="heroicons:document-text"
-                    style="font-size:16px;color:var(--color-primary);flex-shrink:0"></span>
+                  <span class="iconify" data-icon="heroicons:document-text" style="font-size:16px;color:var(--color-primary);flex-shrink:0"></span>
                   <span class="knowledge-item-title">${Utils.escapeHtml(item.title)}</span>
                   <span class="text-xs text-muted">${Utils.formatDate(item.updated_at)}</span>
                 </div>
@@ -493,8 +471,7 @@ window.openKnowledgeArticle = async (id) => {
           <span class="modal-title" id="knowledge-title">文章</span>
           <button class="icon-btn" onclick="Modal.close('modal-knowledge')">${ICONS.close}</button>
         </div>
-        <div class="modal-body" id="knowledge-body"
-          style="overflow-y:auto;max-height:calc(88vh - 80px)"></div>
+        <div class="modal-body" id="knowledge-body" style="overflow-y:auto;max-height:calc(88vh - 80px)"></div>
       </div>`;
     document.body.appendChild(modal);
     modal.addEventListener('click', e => { if (e.target === modal) Modal.close('modal-knowledge'); });
@@ -502,7 +479,7 @@ window.openKnowledgeArticle = async (id) => {
   Modal.open('modal-knowledge');
   $('#knowledge-body').innerHTML = `<div class="skeleton" style="height:300px;border-radius:8px"></div>`;
   try {
-    const res = await API.knowledgeList({ id });
+    const res     = await API.knowledgeList({ id });
     const article = res.data;
     $('#knowledge-title').textContent = article.title;
     $('#knowledge-body').innerHTML = `<div class="knowledge-article">${Utils.sanitizeHtml(article.body)}</div>`;
@@ -514,7 +491,7 @@ window.openKnowledgeArticle = async (id) => {
 /* ── Profile Page ── */
 async function initProfile() {
   updateActiveNav('/profile');
-  const content = $('#content');
+  const content  = $('#content');
   const currency = Utils.currency();
   content.innerHTML = `
     <div class="page-header animate-slide-down">
@@ -522,7 +499,7 @@ async function initProfile() {
       <p class="page-subtitle">管理您的账户信息和偏好设置</p>
     </div>
     <div class="profile-layout">
-      ${[1,2,3].map(() => `<div class="card"><div class="skeleton" style="height:120px;border-radius:8px"></div></div>`).join('')}
+      ${[1,2,3].map(()=>`<div class="card"><div class="skeleton" style="height:120px;border-radius:8px"></div></div>`).join('')}
     </div>`;
 
   try {
@@ -598,9 +575,7 @@ async function initProfile() {
               <div class="settings-item-desc text-sm text-muted">到期前自动从余额扣款续费</div>
             </div>
             <label class="toggle">
-              <input type="checkbox" id="toggle-auto-renewal"
-                ${user?.auto_renewal ? 'checked' : ''}
-                onchange="updateSetting('auto_renewal', this.checked ? 1 : 0)">
+              <input type="checkbox" id="toggle-auto-renewal" ${user?.auto_renewal ? 'checked' : ''} onchange="updateSetting('auto_renewal', this.checked ? 1 : 0)">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
           </div>
@@ -610,9 +585,7 @@ async function initProfile() {
               <div class="settings-item-desc text-sm text-muted">订阅即将到期时发送邮件提醒</div>
             </div>
             <label class="toggle">
-              <input type="checkbox" id="toggle-remind-expire"
-                ${user?.remind_expire ? 'checked' : ''}
-                onchange="updateSetting('remind_expire', this.checked ? 1 : 0)">
+              <input type="checkbox" id="toggle-remind-expire" ${user?.remind_expire ? 'checked' : ''} onchange="updateSetting('remind_expire', this.checked ? 1 : 0)">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
           </div>
@@ -622,9 +595,7 @@ async function initProfile() {
               <div class="settings-item-desc text-sm text-muted">流量即将用完时发送邮件提醒</div>
             </div>
             <label class="toggle">
-              <input type="checkbox" id="toggle-remind-traffic"
-                ${user?.remind_traffic ? 'checked' : ''}
-                onchange="updateSetting('remind_traffic', this.checked ? 1 : 0)">
+              <input type="checkbox" id="toggle-remind-traffic" ${user?.remind_traffic ? 'checked' : ''} onchange="updateSetting('remind_traffic', this.checked ? 1 : 0)">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
           </div>
@@ -645,9 +616,9 @@ async function initProfile() {
 
 async function loadSessions() {
   try {
-    const res = await API.getActiveSession();
+    const res      = await API.getActiveSession();
     const sessions = res.data || [];
-    const el = $('#sessions-list');
+    const el       = $('#sessions-list');
     if (!el) return;
     if (!sessions.length) {
       el.innerHTML = `<div class="text-sm text-muted" style="padding:var(--space-1)">暂无活跃会话</div>`;
@@ -659,9 +630,7 @@ async function loadSessions() {
           <div class="text-sm font-medium">${Utils.escapeHtml(s.ip || '未知 IP')}</div>
           <div class="text-xs text-muted">${Utils.escapeHtml(s.device_info || '未知设备')} · ${Utils.formatDateTime(s.last_activity)}</div>
         </div>
-        <button class="btn btn-ghost btn-sm"
-          data-session-id="${Utils.escapeAttr(String(s.id))}"
-          onclick="removeSession(this.dataset.sessionId)">移除</button>
+        <button class="btn btn-ghost btn-sm" data-session-id="${Utils.escapeAttr(String(s.id))}" onclick="removeSession(this.dataset.sessionId)">移除</button>
       </div>
     `).join('');
   } catch (e) {
@@ -685,7 +654,6 @@ window.updateSetting = async (key, val) => {
     Toast.success('设置已保存');
     if (State.user) State.user[key] = val;
   } catch (e) {
-    console.error('[SLTE] updateSetting failed:', e.message);
     const el = $(`#toggle-${key.replace(/_/g, '-')}`);
     if (el) el.checked = !el.checked;
   }
@@ -708,10 +676,7 @@ window.openChangePasswordModal = () => {
     modal.className = 'modal-overlay hidden';
     modal.innerHTML = `
       <div class="modal" style="max-width:400px">
-        <div class="modal-header">
-          <span class="modal-title">修改密码</span>
-          <button class="icon-btn" onclick="Modal.close('modal-change-pwd')">${ICONS.close}</button>
-        </div>
+        <div class="modal-header"><span class="modal-title">修改密码</span><button class="icon-btn" onclick="Modal.close('modal-change-pwd')">${ICONS.close}</button></div>
         <div class="modal-body">
           <div class="form-group" style="margin-bottom:var(--space-2)">
             <label class="form-label">当前密码</label>
@@ -742,8 +707,8 @@ window.submitChangePassword = async () => {
   const new_password  = $('#new-pwd').value;
   const new_password2 = $('#new-pwd2').value;
   if (!old_password || !new_password) return Toast.warning('请填写完整信息');
-  if (new_password !== new_password2) return Toast.warning('两次密码不一致');
-  if (new_password.length < 8) return Toast.warning('新密码至少8位');
+  if (new_password !== new_password2)  return Toast.warning('两次密码不一致');
+  if (new_password.length < 8)         return Toast.warning('新密码至少8位');
   try {
     await API.changePassword({ old_password, new_password });
     Modal.close('modal-change-pwd');

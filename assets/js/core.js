@@ -69,14 +69,14 @@ const Http = {
 
 /* ── API ── */
 const API = {
-  login:            d => Http.post('/passport/auth/login', d),
-  register:         d => Http.post('/passport/auth/register', d),
-  forget:           d => Http.post('/passport/auth/forget', d),
-  sendEmailCode:    d => Http.post('/passport/comm/sendEmailVerify', d),
+  login:          d => Http.post('/passport/auth/login', d),
+  register:       d => Http.post('/passport/auth/register', d),
+  forget:         d => Http.post('/passport/auth/forget', d),
+  sendEmailCode:  d => Http.post('/passport/comm/sendEmailVerify', d),
   guestConfig: (() => {
     let _cache = null, _pending = null;
     return (opts) => {
-      if (_cache)   return Promise.resolve(_cache);
+      if (_cache) return Promise.resolve(_cache);
       if (_pending) return _pending;
       _pending = Http.get('/guest/comm/config', null, opts || { silent: true })
         .then(r => { _cache = r; _pending = null; return r; })
@@ -85,46 +85,46 @@ const API = {
     };
   })(),
 
-  userInfo:         ()=> Http.get('/user/info'),
-  getSubscribe:     ()=> Http.get('/user/getSubscribe'),
-  getStat:          ()=> Http.get('/user/getStat'),
-  userUpdate:       d => Http.post('/user/update', d),
-  changePassword:   d => Http.post('/user/changePassword', d),
-  resetSecurity:    ()=> Http.get('/user/resetSecurity'),
-  userConfig:       ()=> Http.get('/user/comm/config'),
-  getTrafficLog:    ()=> Http.get('/user/stat/getTrafficLog'),
-  getActiveSession: ()=> Http.get('/user/getActiveSession'),
-  removeSession:    d => Http.post('/user/removeActiveSession', d),
-  transfer:         d => Http.post('/user/transfer', d),
-  newPeriod:        ()=> Http.post('/user/newPeriod'),
-  redeemGiftcard:   d => Http.post('/user/redeemgiftcard', d),
+  userInfo:         ()  => Http.get('/user/info'),
+  getSubscribe:     ()  => Http.get('/user/getSubscribe'),
+  getStat:          ()  => Http.get('/user/getStat'),
+  userUpdate:       d   => Http.post('/user/update', d),
+  changePassword:   d   => Http.post('/user/changePassword', d),
+  resetSecurity:    ()  => Http.get('/user/resetSecurity'),
+  userConfig:       ()  => Http.get('/user/comm/config'),
+  getTrafficLog:    ()  => Http.get('/user/stat/getTrafficLog'),
+  getActiveSession: ()  => Http.get('/user/getActiveSession'),
+  removeSession:    d   => Http.post('/user/removeActiveSession', d),
+  transfer:         d   => Http.post('/user/transfer', d),
+  newPeriod:        ()  => Http.post('/user/newPeriod'),
+  redeemGiftcard:   d   => Http.post('/user/redeemgiftcard', d),
 
-  orderList:        d => Http.get('/user/order/fetch', d),
-  orderDetail:      d => Http.get('/user/order/detail', d),
-  orderSave:        d => Http.post('/user/order/save', d),
-  orderCheckout:    d => Http.post('/user/order/checkout', d),
-  orderCheck:       d => Http.get('/user/order/check', d),
-  orderCancel:      d => Http.post('/user/order/cancel', d),
-  paymentMethods:   ()=> Http.get('/user/order/getPaymentMethod'),
+  orderList:        d   => Http.get('/user/order/fetch', d),
+  orderDetail:      d   => Http.get('/user/order/detail', d),
+  orderSave:        d   => Http.post('/user/order/save', d),
+  orderCheckout:    d   => Http.post('/user/order/checkout', d),
+  orderCheck:       d   => Http.get('/user/order/check', d),
+  orderCancel:      d   => Http.post('/user/order/cancel', d),
+  paymentMethods:   ()  => Http.get('/user/order/getPaymentMethod'),
 
-  planList:         ()=> Http.get('/user/plan/fetch'),
-  serverList:       ()=> Http.get('/user/server/fetch'),
+  planList:         ()  => Http.get('/user/plan/fetch'),
+  serverList:       ()  => Http.get('/user/server/fetch'),
 
-  inviteInfo:       ()=> Http.get('/user/invite/fetch'),
-  inviteGen:        ()=> Http.get('/user/invite/save'),
-  inviteDetails:    d => Http.get('/user/invite/details', d),
+  inviteInfo:       ()  => Http.get('/user/invite/fetch'),
+  inviteGen:        ()  => Http.get('/user/invite/save'),
+  inviteDetails:    d   => Http.get('/user/invite/details', d),
 
-  ticketList:       d => Http.get('/user/ticket/fetch', d),
-  ticketSave:       d => Http.post('/user/ticket/save', d),
-  ticketReply:      d => Http.post('/user/ticket/reply', d),
-  ticketClose:      d => Http.post('/user/ticket/close', d),
-  ticketWithdraw:   d => Http.post('/user/ticket/withdraw', d),
+  ticketList:       d   => Http.get('/user/ticket/fetch', d),
+  ticketSave:       d   => Http.post('/user/ticket/save', d),
+  ticketReply:      d   => Http.post('/user/ticket/reply', d),
+  ticketClose:      d   => Http.post('/user/ticket/close', d),
+  ticketWithdraw:   d   => Http.post('/user/ticket/withdraw', d),
 
-  noticeList:       ()=> Http.get('/user/notice/fetch'),
-  couponCheck:      d => Http.post('/user/coupon/check', d),
-  knowledgeList:    d => Http.get('/user/knowledge/fetch', d),
+  noticeList:       ()  => Http.get('/user/notice/fetch'),
+  couponCheck:      d   => Http.post('/user/coupon/check', d),
+  knowledgeList:    d   => Http.get('/user/knowledge/fetch', d),
 
-  subscribeUrl:     token => `${BASE_URL}/api/v1/client/subscribe?token=${token}`,
+  subscribeUrl: token => `${BASE_URL}/api/v1/client/subscribe?token=${token}`,
 };
 
 /* ── Router ── */
@@ -146,14 +146,10 @@ const Router = {
   async _handle(path) {
     const [route, query] = path.split('?');
     const params = Object.fromEntries(new URLSearchParams(query || ''));
-
     const publicRoutes = ['/login', '/register', '/forget'];
-    if (!State.token && !publicRoutes.includes(route)) {
-      return this.navigate('/login', true);
-    }
-    if (State.token && publicRoutes.includes(route)) {
-      return this.navigate('/dashboard', true);
-    }
+
+    if (!State.token && !publicRoutes.includes(route)) return this.navigate('/login', true);
+    if (State.token  &&  publicRoutes.includes(route)) return this.navigate('/dashboard', true);
 
     this.current = route;
     const handler = this.routes[route] || this.routes['*'];
@@ -161,8 +157,8 @@ const Router = {
   },
 
   init() {
-    const initHash   = location.hash.slice(1) || (State.token ? '/dashboard' : '/login');
-    const initRoute  = initHash.split('?')[0];
+    const initHash  = location.hash.slice(1) || (State.token ? '/dashboard' : '/login');
+    const initRoute = initHash.split('?')[0];
     const publicRoutes = ['/login', '/register', '/forget'];
     const app = document.getElementById('app');
     if (app) {
@@ -260,7 +256,7 @@ const Modal = {
     if (e.shiftKey) {
       if (document.activeElement === first) { e.preventDefault(); last.focus(); }
     } else {
-      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
     }
   },
 
@@ -282,7 +278,7 @@ const Modal = {
           <div class="modal-body"><p id="mc-msg" class="text-secondary" style="line-height:1.7"></p></div>
           <div class="modal-footer">
             <button class="btn btn-ghost" onclick="Modal.close('${id}')">取消</button>
-            <button class="btn btn-primary" id="mc-confirm">确认</button>
+            <button class="btn ${opts.danger ? 'btn-danger' : 'btn-primary'}" id="mc-confirm">确认</button>
           </div>
         </div>`;
       document.body.appendChild(el);
@@ -414,6 +410,22 @@ const Utils = {
   },
   sanitizeHtml(html) {
     if (!html) return '';
+    if (typeof DOMPurify !== 'undefined') {
+      return DOMPurify.sanitize(html, {
+        ALLOWED_TAGS: ['p','br','strong','b','em','i','u','s','ul','ol','li',
+          'h1','h2','h3','h4','h5','h6','blockquote','code','pre','a','img',
+          'hr','table','thead','tbody','tr','th','td','colgroup','col','caption',
+          'span','div','figure','figcaption','mark','del','ins','sub','sup'],
+        ALLOWED_ATTR: ['href','src','alt','title','class','target','rel','style',
+          'width','height','colspan','rowspan','align','valign','id','name','lang','dir'],
+        FORCE_BODY: true,
+        ADD_ATTR: ['target'],
+        FORBID_TAGS: ['script','style','iframe','object','embed','form','input','button'],
+        FORBID_ATTR: ['onerror','onload','onclick','onmouseover','onfocus','onblur'],
+        ALLOW_DATA_ATTR: false,
+        HOOK_BEFORE_SANITIZE_ELEMENT: null,
+      });
+    }
     const allowedTags  = /^(p|br|strong|b|em|i|u|s|ul|ol|li|h[1-6]|blockquote|code|pre|a|img|hr|table|thead|tbody|tr|th|td|colgroup|col|caption|span|div|figure|figcaption|mark|del|ins|sub|sup)$/i;
     const allowedAttrs = /^(href|src|alt|title|class|target|rel|style|width|height|colspan|rowspan|align|valign|id|name|lang|dir)$/i;
     const div = document.createElement('div');
@@ -429,12 +441,10 @@ const Utils = {
               if (!allowedAttrs.test(attr.name)) {
                 child.removeAttribute(attr.name);
               } else if (attr.name === 'href' || attr.name === 'src') {
-                const val = attr.value.trim().toLowerCase();
-                if (val.startsWith('javascript:') || val.startsWith('data:text')) {
-                  child.removeAttribute(attr.name);
-                }
+                const val = attr.value.trim().toLowerCase().replace(/[\s\0]/g, '');
+                if (/^(javascript|vbscript|data:text)/i.test(val)) child.removeAttribute(attr.name);
               } else if (attr.name === 'style') {
-                child.setAttribute('style', attr.value.replace(/expression\s*\(|javascript:|url\s*\(/gi, ''));
+                child.setAttribute('style', attr.value.replace(/expression\s*\(|javascript:|vbscript:|url\s*\(/gi, ''));
               }
             });
             if (child.tagName.toLowerCase() === 'a') {

@@ -1,25 +1,25 @@
 /* ── Dashboard & Layout ── */
 
 const ICONS = {
-  dashboard: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>`,
-  book: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>`,
-  creditCard: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>`,
-  shoppingBag: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>`,
-  users: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>`,
-  signal: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>`,
-  sparkles: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>`,
-  user: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>`,
-  ticket: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"/></svg>`,
-  chartBar: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>`,
-  logout: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/></svg>`,
-  menu: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>`,
-  close: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>`,
-  bell: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>`,
+  dashboard:    `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>`,
+  book:         `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>`,
+  creditCard:   `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>`,
+  shoppingBag:  `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>`,
+  users:        `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>`,
+  signal:       `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>`,
+  sparkles:     `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>`,
+  user:         `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>`,
+  ticket:       `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"/></svg>`,
+  chartBar:     `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>`,
+  logout:       `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/></svg>`,
+  menu:         `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>`,
+  close:        `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>`,
+  bell:         `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>`,
   chevronRight: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>`,
-  gift: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1012 10.125 2.625 2.625 0 0012 4.875zM12 10.125v1.125m0 0H9.75m2.25 0H14.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>`,
-  wallet: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3"/></svg>`,
-  moon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>`,
-  sun: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>`,
+  gift:         `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1012 10.125 2.625 2.625 0 0012 4.875zM12 10.125v1.125m0 0H9.75m2.25 0H14.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>`,
+  wallet:       `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3"/></svg>`,
+  moon:         `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>`,
+  sun:          `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>`,
 };
 
 const SIDEBAR_GROUPS = [
@@ -63,7 +63,6 @@ const MOBILE_NAV_ITEMS = [
   { id: 'profile',   icon: 'user',      label: '我的',  route: '/profile' },
 ];
 
-/* ── Lottie 空状态 ── */
 const LottieHelper = {
   _instances: {},
   play(containerId, jsonPath, opts = {}) {
@@ -71,8 +70,11 @@ const LottieHelper = {
     if (!container || typeof lottie === 'undefined') return;
     if (this._instances[containerId]) this._instances[containerId].destroy();
     this._instances[containerId] = lottie.loadAnimation({
-      container, renderer: 'svg',
-      loop: opts.loop !== false, autoplay: true, path: jsonPath,
+      container,
+      renderer: 'svg',
+      loop: opts.loop !== false,
+      autoplay: true,
+      path: jsonPath,
     });
   },
   destroy(containerId) {
@@ -97,7 +99,9 @@ function emptyState(id, title, desc, btnLabel, btnAction) {
 }
 
 function initLottieEmpty(id) {
-  requestAnimationFrame(() => LottieHelper.play(id, 'assets/lottie/empty.json', { loop: true }));
+  requestAnimationFrame(() => {
+    LottieHelper.play(id, 'assets/lottie/empty.json', { loop: true });
+  });
 }
 
 function scanIconify() {
@@ -106,19 +110,18 @@ function scanIconify() {
   });
 }
 
-/* ── 主布局渲染 ── */
+/* ── Layout ── */
 function renderLayout() {
-  const app = document.getElementById('app');
+  const app      = document.getElementById('app');
   const siteName = SETTINGS.title || 'SLTE';
-  const logo = SETTINGS.logo;
-  const allNavItems = SIDEBAR_GROUPS.flatMap(g => g.items);
+  const logo     = SETTINGS.logo;
 
   app.innerHTML = `
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
         ${logo
           ? `<img src="${logo}" alt="${siteName}" class="sidebar-logo-img">`
-          : `<div class="sidebar-logo-icon">${(siteName[0]||'S').toUpperCase()}</div>`
+          : `<div class="sidebar-logo-icon">${(siteName[0] || 'S').toUpperCase()}</div>`
         }
         <span class="sidebar-logo-text">${siteName}</span>
       </div>
@@ -132,82 +135,133 @@ function renderLayout() {
                  onclick="Router.navigate('${item.route}');return false;">
                 <span class="nav-icon">${ICONS[item.icon] || ''}</span>
                 <span class="nav-label">${item.label}</span>
-                ${item.badge ? `<span class="badge badge-primary badge-xs">${item.badge}</span>` : ''}
+                ${item.badge ? `<span class="nav-badge">${item.badge}</span>` : ''}
               </a>
             `).join('')}
           </div>
         `).join('')}
       </nav>
       <div class="sidebar-footer">
-        <button class="nav-item nav-item-danger" onclick="logout()">
-          <span class="nav-icon">${ICONS.logout}</span>
-          <span class="nav-label">退出登录</span>
-        </button>
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="sidebar-avatar">—</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-email truncate" id="sidebar-email">加载中...</div>
+            <div class="sidebar-user-balance" id="sidebar-balance">余额: —</div>
+          </div>
+        </div>
       </div>
     </aside>
 
-    <div class="sidebar-overlay hidden" id="sidebar-overlay" onclick="closeSidebar()"></div>
-
-    <div class="main-wrapper" id="main-wrapper">
+    <div class="main-wrapper">
       <header class="topbar" id="topbar">
-        <div class="topbar-inner">
-          <button class="icon-btn menu-toggle" id="menu-toggle" onclick="toggleSidebar()" aria-label="菜单">
-            <span id="menu-icon">${ICONS.menu}</span>
+        <button class="icon-btn" id="menu-toggle" onclick="toggleSidebar()">
+          ${ICONS.menu}
+        </button>
+        <div class="topbar-title" id="topbar-title">${siteName}</div>
+        <div class="topbar-actions">
+          <button class="dark-toggle" id="dark-toggle-btn" onclick="toggleDarkMode()" title="切换夜色模式">
+            <span id="dark-toggle-icon">${ICONS.moon}</span>
           </button>
-          <span class="topbar-title" id="topbar-title">仪表盘</span>
-          <div class="topbar-actions">
-            <button class="icon-btn" id="dark-toggle-btn" onclick="toggleDarkMode()" aria-label="切换夜色模式">
-              <span id="dark-toggle-icon">${ICONS.moon}</span>
-            </button>
-            <button class="icon-btn" onclick="Router.navigate('/notices')" aria-label="公告">
-              ${ICONS.bell}
-            </button>
-            <button class="avatar-btn" onclick="Router.navigate('/profile')" aria-label="个人中心">
-              <span id="topbar-avatar" class="avatar-text">U</span>
-            </button>
+          <button class="topbar-notice icon-btn" onclick="Router.navigate('/notices')" title="公告">
+            ${ICONS.bell}
+          </button>
+          <div class="topbar-avatar-wrap" id="topbar-avatar-wrap">
+            <button class="topbar-avatar" id="topbar-avatar" onclick="toggleUserMenu()" title="账户">—</button>
+            <div class="user-dropdown hidden" id="user-dropdown">
+              <div class="user-dropdown-header">
+                <div class="user-dropdown-email" id="dropdown-email">加载中...</div>
+                <div class="user-dropdown-balance" id="dropdown-balance"></div>
+              </div>
+              <div class="user-dropdown-divider"></div>
+              <button class="user-dropdown-item" onclick="Router.navigate('/profile');closeUserMenu()">
+                <span class="iconify" data-icon="heroicons:user-circle" style="font-size:16px"></span>
+                个人中心
+              </button>
+              <button class="user-dropdown-item user-dropdown-item-danger" onclick="logout()">
+                <span class="iconify" data-icon="heroicons:arrow-right-on-rectangle" style="font-size:16px"></span>
+                退出登录
+              </button>
+            </div>
           </div>
         </div>
       </header>
+      <main class="content" id="content"></main>
+    </div>
 
-      <main class="main-content" id="content"></main>
+    <nav class="mobile-nav" id="mobile-nav">
+      ${MOBILE_NAV_ITEMS.map(item => `
+        <a class="mobile-nav-item" id="mnav-${item.id}" data-route="${item.route}"
+           href="#${item.route}"
+           onclick="Router.navigate('${item.route}');return false;">
+          <span class="mobile-nav-icon">${ICONS[item.icon] || ''}</span>
+          <span class="mobile-nav-label">${item.label}</span>
+        </a>
+      `).join('')}
+    </nav>
 
-      <nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="底部导航">
-        ${MOBILE_NAV_ITEMS.map(item => `
-          <button class="mobile-nav-item" id="mnav-${item.id}" data-route="${item.route}"
-                  onclick="Router.navigate('${item.route}')" aria-label="${item.label}">
-            <span class="mobile-nav-icon">${ICONS[item.icon] || ''}</span>
-            <span class="mobile-nav-label">${item.label}</span>
-          </button>
-        `).join('')}
-      </nav>
-    </div>`;
+    <div class="sidebar-overlay hidden" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  `;
 
-  app.classList.remove('auth-mode');
-  app.classList.add('app-mode');
+  State.on('user', updateSidebarUser);
+  if (State.user) updateSidebarUser(State.user);
+  updateActiveNav(Router.current || '/dashboard');
+  scanIconify();
 
-  State.on('user', user => {
-    if (!user) return;
-    const avatarEl = document.getElementById('topbar-avatar');
-    if (avatarEl) avatarEl.textContent = (user.email?.[0] || 'U').toUpperCase();
-  });
-  if (State.user) {
-    const avatarEl = document.getElementById('topbar-avatar');
-    if (avatarEl) avatarEl.textContent = (State.user.email?.[0] || 'U').toUpperCase();
+  if (window.innerWidth >= 769) {
+    const toggle = $('#menu-toggle');
+    const topbar = $('#topbar');
+    if (toggle) toggle.style.setProperty('display', 'none', 'important');
+    if (topbar) topbar.style.setProperty('padding-left', '16px', 'important');
   }
 }
 
+function updateSidebarUser(user) {
+  if (!user) return;
+  const currency  = Utils.currency();
+  const initial   = (user.email || 'U')[0].toUpperCase();
+  const balText   = `${currency}${Utils.formatMoney(user.balance)}`;
+
+  const emailEl   = $('#sidebar-email');
+  const balanceEl = $('#sidebar-balance');
+  const avatarEl  = $('#sidebar-avatar');
+  if (emailEl)   emailEl.textContent   = user.email;
+  if (balanceEl) balanceEl.textContent = `余额 ${balText}`;
+  if (avatarEl)  avatarEl.textContent  = initial;
+
+  const topAvatar = $('#topbar-avatar');
+  const dropEmail = $('#dropdown-email');
+  const dropBal   = $('#dropdown-balance');
+  if (topAvatar) topAvatar.textContent = initial;
+  if (dropEmail) dropEmail.textContent = user.email;
+  if (dropBal)   dropBal.textContent   = `余额 ${balText}`;
+}
+
+window.toggleUserMenu = () => {
+  const dd = $('#user-dropdown');
+  if (!dd) return;
+  const isOpen = !dd.classList.contains('hidden');
+  if (isOpen) {
+    dd.classList.add('hidden');
+  } else {
+    dd.classList.remove('hidden');
+    setTimeout(() => {
+      document.addEventListener('click', function handler(e) {
+        if (!$('#topbar-avatar-wrap')?.contains(e.target)) {
+          dd.classList.add('hidden');
+          document.removeEventListener('click', handler);
+        }
+      });
+    }, 0);
+  }
+};
+window.closeUserMenu = () => $('#user-dropdown')?.classList.add('hidden');
+
 function updateActiveNav(route) {
-  $$('.nav-item[data-route]').forEach(el => el.classList.remove('active'));
-  $$('.mobile-nav-item[data-route]').forEach(el => el.classList.remove('active'));
-
-  const navEl   = $(`.nav-item[data-route="${route}"]`);
-  const mnavEl  = $(`.mobile-nav-item[data-route="${route}"]`);
-  if (navEl)  navEl.classList.add('active');
-  if (mnavEl) mnavEl.classList.add('active');
-
-  const allItems = SIDEBAR_GROUPS.flatMap(g => g.items).concat(MOBILE_NAV_ITEMS);
-  const found = allItems.find(i => i.route === route);
-  const titleEl = $('#topbar-title');
+  $$('.nav-item').forEach(el => el.classList.toggle('active', el.dataset.route === route));
+  $$('.mobile-nav-item').forEach(el => el.classList.toggle('active', el.dataset.route === route));
+  const allItems = SIDEBAR_GROUPS.flatMap(g => g.items);
+  const found    = allItems.find(n => n.route === route);
+  const titleEl  = $('#topbar-title');
   if (titleEl && found) titleEl.textContent = found.label;
 }
 
@@ -223,7 +277,6 @@ function toggleSidebar() {
     overlay?.classList.remove('hidden');
   }
 }
-
 function closeSidebar() {
   $('#sidebar')?.classList.remove('open');
   $('#sidebar-overlay')?.classList.add('hidden');
@@ -261,8 +314,7 @@ async function initDashboard() {
 
     content.innerHTML = `
       <div class="page-header animate-slide-down">
-        <h1 class="page-title">仪表盘</h1
->
+        <h1 class="page-title">仪表盘</h1>
         <p class="page-subtitle">欢迎回来，${Utils.escapeHtml(user.email)}</p>
       </div>
 
@@ -272,12 +324,12 @@ async function initDashboard() {
             <div class="stat-card-icon" style="background:var(--color-primary-bg);color:var(--color-primary)">
               <span class="iconify" data-icon="heroicons:signal" style="font-size:22px"></span>
             </div>
-            <span class="badge ${pct>=90?'badge-danger':pct>=70?'badge-warning':'badge-success'}">${pct}%</span>
+            <span class="badge ${pct >= 90 ? 'badge-danger' : pct >= 70 ? 'badge-warning' : 'badge-success'}">${pct}%</span>
           </div>
           <div class="stat-card-value">${Utils.formatGB(total - used)}</div>
           <div class="stat-card-label">剩余流量</div>
           <div class="progress" style="margin-top:12px">
-            <div class="progress-bar ${pct>=90?'danger':pct>=70?'warning':''}" style="width:${pct}%"></div>
+            <div class="progress-bar ${pct >= 90 ? 'danger' : pct >= 70 ? 'warning' : ''}" style="width:${pct}%"></div>
           </div>
           <div class="flex justify-between text-xs text-muted" style="margin-top:6px">
             <span>已用 ${Utils.formatGB(used)}</span>
@@ -290,7 +342,7 @@ async function initDashboard() {
             <div class="stat-card-icon" style="background:var(--color-info-bg);color:var(--color-info)">
               <span class="iconify" data-icon="heroicons:calendar-days" style="font-size:22px"></span>
             </div>
-            <span class="badge ${daysLeft<=7?'badge-danger':daysLeft<=30?'badge-warning':'badge-success'}">${daysLeft<=0?'已过期':daysLeft+'天'}</span>
+            <span class="badge ${daysLeft <= 7 ? 'badge-danger' : daysLeft <= 30 ? 'badge-warning' : 'badge-success'}">${daysLeft <= 0 ? '已过期' : daysLeft + '天'}</span>
           </div>
           <div class="stat-card-value">${sub?.expired_at ? Utils.formatDate(sub.expired_at) : '无限期'}</div>
           <div class="stat-card-label">订阅到期</div>
@@ -369,15 +421,15 @@ async function initDashboard() {
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-1);margin-top:var(--space-2)">
             <div class="subscribe-stat-item">
               <div class="text-xs text-muted">上传</div>
-              <div class="text-sm font-medium">${Utils.formatGB(sub?.u||0)}</div>
+              <div class="text-sm font-medium">${Utils.formatGB(sub?.u || 0)}</div>
             </div>
             <div class="subscribe-stat-item">
               <div class="text-xs text-muted">下载</div>
-              <div class="text-sm font-medium">${Utils.formatGB(sub?.d||0)}</div>
+              <div class="text-sm font-medium">${Utils.formatGB(sub?.d || 0)}</div>
             </div>
             <div class="subscribe-stat-item">
               <div class="text-xs text-muted">设备限制</div>
-              <div class="text-sm font-medium">${sub?.device_limit||'不限'}</div>
+              <div class="text-sm font-medium">${sub?.device_limit || '不限'}</div>
             </div>
           </div>
         </div>
@@ -390,7 +442,7 @@ async function initDashboard() {
               { icon: 'heroicons:wallet',       label: '余额充值', route: '/deposit',  bg: 'var(--color-success-bg)', color: 'var(--color-success)' },
               { icon: 'heroicons:gift',         label: '礼品卡',   route: '/giftcard', bg: 'var(--color-warning-bg)', color: 'var(--color-warning)' },
               { icon: 'heroicons:shopping-bag', label: '我的订单', route: '/orders',   bg: 'var(--color-info-bg)',    color: 'var(--color-info)' },
-              { icon: 'heroicons:user-group',   label: '推广赚钱', route: '/invite',   bg: 'var(--color-danger-bg)',  color: 'var(--color-danger)' },
+              { icon: 'heroicons:user-group',   label: '推广赚錢', route: '/invite',   bg: 'var(--color-danger-bg)',  color: 'var(--color-danger)' },
               { icon: 'heroicons:ticket',       label: '提交工单', route: '/tickets',  bg: 'var(--color-surface-2)',  color: 'var(--color-text-secondary)' },
             ].map(a => `
               <button class="quick-action-btn" onclick="Router.navigate('${a.route}')"
@@ -423,7 +475,7 @@ async function initDashboard() {
 
 async function loadDashboardNotices() {
   try {
-    const res = await API.noticeList();
+    const res     = await API.noticeList();
     const notices = res.data || [];
     if (!notices.length) return;
     const el = $('#dash-notices');
@@ -431,10 +483,7 @@ async function loadDashboardNotices() {
     el.innerHTML = `
       <div class="card animate-slide-up" style="margin-top:var(--space-2)">
         <div class="card-header">
-          <div class="card-title">
-            <span class="iconify" data-icon="heroicons:megaphone" style="font-size:18px;vertical-align:-3px;margin-right:6px"></span>
-            最新公告
-          </div>
+          <div class="card-title">系统公告</div>
           <button class="btn btn-ghost btn-sm" onclick="Router.navigate('/notices')">查看全部</button>
         </div>
         <div class="notice-list">
@@ -457,8 +506,8 @@ async function loadDashboardNotices() {
 /* ── 自动续费开关 ── */
 window.toggleAutoRenewal = async (btn) => {
   const current = btn.dataset.state === '1';
-  const next = !current;
-  btn.disabled = true;
+  const next    = !current;
+  btn.disabled  = true;
   btn.classList.add('toggle-loading');
   try {
     await API.userUpdate({ auto_renewal: next ? 1 : 0 });
@@ -486,12 +535,12 @@ async function initServers() {
     </div>
     <div id="servers-container">
       <div class="dashboard-grid">
-        ${[1,2,3,4,5,6].map(()=>`<div class="stat-card"><div class="skeleton" style="height:80px;border-radius:8px"></div></div>`).join('')}
+        ${[1,2,3,4,5,6].map(() => `<div class="stat-card"><div class="skeleton" style="height:80px;border-radius:8px"></div></div>`).join('')}
       </div>
     </div>`;
 
   try {
-    const res = await API.serverList();
+    const res     = await API.serverList();
     const servers = res.data || [];
     if (!servers.length) {
       $('#servers-container').innerHTML = emptyState('lottie-servers', '暂无节点', '当前没有可用的节点');
@@ -501,9 +550,9 @@ async function initServers() {
     $('#servers-container').innerHTML = `
       <div class="servers-grid stagger">
         ${servers.map(s => {
-          const online  = s.online_user || 0;
-          const load    = s.load || 0;
-          const loadPct = Math.min(100, Math.round(load * 100));
+          const online   = s.online_user || 0;
+          const load     = s.load || 0;
+          const loadPct  = Math.min(100, Math.round(load * 100));
           const statusColor = loadPct > 80 ? 'var(--color-danger)' : loadPct > 50 ? 'var(--color-warning)' : 'var(--color-success)';
           return `
             <div class="server-card">
@@ -512,14 +561,14 @@ async function initServers() {
                   <span class="dot" style="color:${statusColor}"></span>
                   <span class="text-sm font-medium truncate" style="max-width:140px">${Utils.escapeHtml(s.name)}</span>
                 </div>
-                <span class="badge ${loadPct>80?'badge-danger':loadPct>50?'badge-warning':'badge-success'}">${loadPct}%</span>
+                <span class="badge ${loadPct > 80 ? 'badge-danger' : loadPct > 50 ? 'badge-warning' : 'badge-success'}">${loadPct}%</span>
               </div>
               <div class="flex justify-between text-xs text-muted">
                 <span>在线: ${online}</span>
                 <span>${s.type?.toUpperCase() || 'V2'}</span>
               </div>
               <div class="progress" style="margin-top:8px;height:4px">
-                <div class="progress-bar ${loadPct>80?'danger':loadPct>50?'warning':''}" style="width:${loadPct}%"></div>
+                <div class="progress-bar ${loadPct > 80 ? 'danger' : loadPct > 50 ? 'warning' : ''}" style="width:${loadPct}%"></div>
               </div>
             </div>`;
         }).join('')}
@@ -541,7 +590,7 @@ async function initTraffic() {
     <div id="traffic-container"><div class="skeleton" style="height:300px;border-radius:16px"></div></div>`;
 
   try {
-    const res = await API.getTrafficLog();
+    const res  = await API.getTrafficLog();
     const logs = res.data || [];
     if (!logs.length) {
       $('#traffic-container').innerHTML = emptyState('lottie-traffic', '暂无流量记录', '近期没有流量使用记录');
@@ -583,7 +632,7 @@ function detectDevice() {
 }
 
 function getClientsByDevice(url) {
-  const enc = encodeURIComponent(url);
+  const enc    = encodeURIComponent(url);
   const device = detectDevice();
 
   const all = {
@@ -607,7 +656,7 @@ function getClientsByDevice(url) {
                     scheme: `shadowrocket://add/sub://${btoa(url)}` },
     quantumultx:  { name: 'Quantumult X',             color: '#f59e0b', bg: '#fffbeb',
                     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
-                    scheme: `quantumult-x:///update-remote-resource?remote-resource=${encodeURIComponent(JSON.stringify({subscriptions:[{url,tag:'SLTE'}]}))}` },
+                    scheme: `quantumult-x:///update-remote-resource?remote-resource=${encodeURIComponent(JSON.stringify({ subscriptions: [{ url, tag: 'SLTE' }] }))}` },
     surge:        { name: 'Surge',                    color: '#6366f1', bg: '#eef2ff',
                     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
                     scheme: `surge:///install-config?url=${enc}` },
@@ -635,14 +684,13 @@ function getImportActions(url) {
   `).join('');
 }
 
-window.subCopyLink = function() {
+window.subCopyLink = function () {
   const url = $('#sub-url-input')?.value;
   if (!url) return Toast.warning('暂无订阅链接');
   Utils.copy(url);
 };
 
-/* ── 订阅二维码弹窗 ── */
-window.showSubQR = function(url) {
+window.showSubQR = function (url) {
   if (!url) return Toast.warning('暂无订阅链接');
 
   let modal = $('#modal-sub-qr');
@@ -657,9 +705,7 @@ window.showSubQR = function(url) {
           <button class="icon-btn" onclick="Modal.close('modal-sub-qr')">${ICONS.close}</button>
         </div>
         <div class="modal-body" style="display:flex;flex-direction:column;align-items:center;gap:var(--space-2)">
-          <div id="sub-qr-wrap" style="background:#fff;padding:12px;border-radius:var(--radius-md);border:1px solid var(--color-border-light)">
-            <canvas id="sub-qr-canvas" width="220" height="220"></canvas>
-          </div>
+          <div id="sub-qr-wrap" style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--color-border)"></div>
           <p class="text-sm text-muted" style="text-align:center">使用代理客户端扫描此二维码<br>即可一键导入订阅</p>
           <button class="btn btn-secondary btn-sm btn-full" onclick="subCopyLink()">
             <span class="iconify" data-icon="heroicons:clipboard-document" style="font-size:14px"></span>
@@ -672,16 +718,11 @@ window.showSubQR = function(url) {
   }
 
   Modal.open('modal-sub-qr');
-
   const wrap = document.getElementById('sub-qr-wrap');
   if (typeof QRCode !== 'undefined') {
     try {
       wrap.innerHTML = '';
-      new QRCode(wrap, {
-        text: url, width: 220, height: 220,
-        colorDark: '#000000', colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M
-      });
+      new QRCode(wrap, { text: url, width: 220, height: 220, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
     } catch (err) {
       console.error('[SLTE] QR generation failed:', err);
       wrap.innerHTML = '<canvas id="sub-qr-canvas" width="220" height="220"></canvas>';
@@ -705,60 +746,48 @@ function _drawQRFallback(canvas) {
   ctx.fillText('请手动复制链接', 110, 120);
 }
 
-/* ── 夜色模式 ── */
+/* ── Dark Mode ── */
 const DARK_KEY = 'slte_dark';
 
 function applyDarkMode(isDark) {
-  if (!document.body.hasAttribute('data-dark-ready')) {
-    document.body.setAttribute('data-dark-ready', '1');
-  }
-  if (isDark) {
-    document.body.setAttribute('data-dark', '1');
-  } else {
-    document.body.removeAttribute('data-dark');
-  }
+  if (!document.body.hasAttribute('data-dark-ready')) document.body.setAttribute('data-dark-ready', '1');
+  if (isDark) document.body.setAttribute('data-dark', '1');
+  else        document.body.removeAttribute('data-dark');
 
   const iconEl = document.getElementById('dark-toggle-icon');
   if (iconEl) iconEl.innerHTML = isDark ? ICONS.sun : ICONS.moon;
-
   const btn = document.getElementById('dark-toggle-btn');
-  if (btn) btn.setAttribute('aria-label', isDark ? '切换为日间模式' : '切换为夜色模式');
-
-  const themeColor  = isDark ? '#1A1D27' : '#4A7C6F';
-  const statusStyle = isDark ? 'black-translucent' : 'default';
+  if (btn) btn.title = isDark ? '切换日间模式' : '切换夜色模式';
 
   function refreshMeta(id, attrName, value) {
-    var el = document.getElementById(id);
+    const el = document.getElementById(id);
     if (!el) return;
-    var parent = el.parentNode;
-    var next = el.nextSibling;
+    const parent = el.parentNode;
+    const next   = el.nextSibling;
     el.setAttribute(attrName, value);
     if (parent) { parent.removeChild(el); parent.insertBefore(el, next); }
   }
 
-  refreshMeta('meta-theme-color', 'content', themeColor);
-  refreshMeta('meta-status-bar',  'content', statusStyle);
+  refreshMeta('meta-theme-color', 'content', isDark ? '#1A1D27' : '#4A7C6F');
+  refreshMeta('meta-status-bar',  'content', isDark ? 'black-translucent' : 'default');
 
-  var t = document.title;
-  document.title = t + '\u200b';
-  requestAnimationFrame(function() { document.title = t; });
+  const t = document.title;
+  document.title = t + ' ';
+  requestAnimationFrame(() => { document.title = t; });
 }
 
-window.toggleDarkMode = function() {
+window.toggleDarkMode = function () {
   const isDark = document.body.getAttribute('data-dark') === '1';
-  const next = !isDark;
+  const next   = !isDark;
   localStorage.setItem(DARK_KEY, next ? '1' : '0');
   applyDarkMode(next);
 };
 
 function initDarkMode() {
-  const saved = localStorage.getItem(DARK_KEY);
-  const prefersDark = saved !== null
-    ? saved === '1'
-    : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const saved       = localStorage.getItem(DARK_KEY);
+  const prefersDark = saved !== null ? saved === '1' : window.matchMedia('(prefers-color-scheme: dark)').matches;
   applyDarkMode(prefersDark);
   document.documentElement.removeAttribute('data-dark-init');
-
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if (localStorage.getItem(DARK_KEY) === null) applyDarkMode(e.matches);
   });
@@ -766,39 +795,36 @@ function initDarkMode() {
 
 initDarkMode();
 
-/* ── Safe Area 适配 ── */
-var _safeAreaInited = false;
+/* ── Safe Area ── */
+let _safeAreaInited = false;
 
 function initSafeArea() {
   if (_safeAreaInited) return;
   _safeAreaInited = true;
 
-  var probeTop = document.createElement('div');
-  probeTop.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;pointer-events:none;opacity:0;z-index:-1;';
+  const probeTop    = document.createElement('div');
+  probeTop.style.cssText    = 'position:fixed;top:0;left:0;width:1px;height:1px;pointer-events:none;opacity:0;z-index:-1;';
   document.body.appendChild(probeTop);
 
-  var probeBottom = document.createElement('div');
+  const probeBottom = document.createElement('div');
   probeBottom.style.cssText = 'position:fixed;bottom:0;left:0;width:1px;height:1px;pointer-events:none;opacity:0;z-index:-1;';
   document.body.appendChild(probeBottom);
 
   function measure() {
-    var rawTop    = Math.round(probeTop.getBoundingClientRect().top);
-    var safeTop   = Math.max(0, Math.min(rawTop, 44));
-    var rawBottom = 0;
-    try { rawBottom = Math.round(window.innerHeight - probeBottom.getBoundingClientRect().bottom); } catch(e) { rawBottom = 0; }
-    var safeBottom = Math.max(0, Math.min(rawBottom, 34));
+    const rawTop    = Math.round(probeTop.getBoundingClientRect().top);
+    const safeTop   = Math.max(0, Math.min(rawTop, 44));
+    let rawBottom   = 0;
+    try { rawBottom = Math.round(window.innerHeight - probeBottom.getBoundingClientRect().bottom); } catch (e) { rawBottom = 0; }
+    const safeBottom = Math.max(0, Math.min(rawBottom, 34));
     document.documentElement.style.setProperty('--safe-top',    safeTop    + 'px');
     document.documentElement.style.setProperty('--safe-bottom', safeBottom + 'px');
   }
 
   measure();
   window.addEventListener('resize', measure);
-  window.addEventListener('orientationchange', function() { setTimeout(measure, 300); });
+  window.addEventListener('orientationchange', () => setTimeout(measure, 300));
   if (window.visualViewport) window.visualViewport.addEventListener('resize', measure);
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initSafeArea);
-} else {
-  initSafeArea();
-}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSafeArea);
+else initSafeArea();
